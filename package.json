@@ -1,0 +1,23 @@
+{
+    "name": "newbee-admin",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite --mode development",
+        "build:beta": "vite build --mode beta",
+        "build:release": "vite build --mode release",
+        "server": "vite preview"
+    },
+    "dependencies": {
+        "axios": "^0.27.2",
+        "element-plus": "^2.2.1",
+        "vue": "^3.2.25",
+        "vue-router": "^4.0.13"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^2.3.3",
+        "unplugin-auto-import": "^0.7.2",
+        "unplugin-vue-components": "^0.19.5",
+        "vite": "^2.9.9"
+    }
+}
