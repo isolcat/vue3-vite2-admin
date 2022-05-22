@@ -8,11 +8,15 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
     plugins: [vue(),
+        //按需加载
         AutoImport({
             resolvers: [ElementPlusResolver()],
         }),
+        //按需引入，主题色的配置需要加上importStyle:'sass'
         Components({
-            resolvers: [ElementPlusResolver()],
+            resolvers: [ElementPlusResolver({
+                importStyle: 'sass'
+            })],
         }),
     ],
     resolve: {
@@ -22,6 +26,14 @@ export default ({ mode }) => defineConfig({
             '@': path.resolve(__dirname, 'src')
         },
         extensions: ['.vue', '.js', 'jsx', '.json']
+    },
+    css: {
+        preprocessorOptions: {
+            // 覆盖掉element-plus包中的主题变量文件
+            scss: {
+                additionalData: `@use "@/styles/element/index.scss" as *;`,
+            },
+        },
     },
     // 解决跨域问题
     server: {
@@ -33,5 +45,4 @@ export default ({ mode }) => defineConfig({
             }
         }
     },
-    base: mode == 'development' ? './' : (mode == 'beta' ? '//s.baidu.com/beta/xxx' : '//s.baidu.com/release/xxx') // 静态资源路径配置
 })
