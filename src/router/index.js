@@ -4,9 +4,9 @@ import AddGood from '@/views/AddGood.vue'
 import Login from '@/views/Login.vue'
 
 const router = createRouter({
-    history: createWebHashHistory(), //hash模式
+    history: createWebHashHistory(), // hash 模式
     routes: [{
-            path: '/', //默认的地址
+            path: '/',
             name: 'index',
             component: Index
         },
@@ -22,4 +22,5 @@ const router = createRouter({
         }
     ]
 })
+
 export default router

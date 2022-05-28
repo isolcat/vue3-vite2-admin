@@ -5,31 +5,13 @@ import Footer from "@/components/Footer.vue";
 import { useRouter } from "vue-router";
 import { pathMap, localGet } from "@/utils";
 
-console.log("App");
 const noMenu = ["/login"];
 const router = useRouter();
 const state = reactive({
-  defaultOpen: ["1", "2", "3", "4"],
   showMenu: true,
-  currentPath: "/dashboard",
-  count: {
-    number: 1,
-  },
 });
-// 监听浏览器原生回退事件
-if (window.history && window.history.pushState) {
-  history.pushState(null, null, document.URL);
-  window.addEventListener(
-    "popstate",
-    () => {
-      if (!localGet("token")) {
-        state.showMenu = false;
-      }
-    },
-    false
-  );
-}
-const unwatch = router.beforeEach((to, from, next) => {
+
+router.beforeEach((to, from, next) => {
   if (to.path == "/login") {
     // 如果路径是 /login 则正常执行
     next();
@@ -44,11 +26,7 @@ const unwatch = router.beforeEach((to, from, next) => {
     }
   }
   state.showMenu = !noMenu.includes(to.path);
-  state.currentPath = to.path;
   document.title = pathMap[to.name];
-});
-onUnmounted(() => {
-  unwatch();
 });
 </script>
 
