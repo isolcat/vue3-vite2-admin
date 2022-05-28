@@ -1,48 +1,178 @@
 <script setup>
+import { onUnmounted, reactive } from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import { useRouter } from "vue-router";
+import { pathMap, localGet } from "@/utils";
+
+console.log("App");
+const noMenu = ["/login"];
+const router = useRouter();
+const state = reactive({
+  defaultOpen: ["1", "2", "3", "4"],
+  showMenu: true,
+  currentPath: "/dashboard",
+  count: {
+    number: 1,
+  },
+});
+// 监听浏览器原生回退事件
+if (window.history && window.history.pushState) {
+  history.pushState(null, null, document.URL);
+  window.addEventListener(
+    "popstate",
+    () => {
+      if (!localGet("token")) {
+        state.showMenu = false;
+      }
+    },
+    false
+  );
+}
+const unwatch = router.beforeEach((to, from, next) => {
+  if (to.path == "/login") {
+    // 如果路径是 /login 则正常执行
+    next();
+  } else {
+    // 如果不是 /login，判断是否有 token
+    if (!localGet("token")) {
+      // 如果没有，则跳至登录页面
+      next({ path: "/login" });
+    } else {
+      // 否则继续执行
+      next();
+    }
+  }
+  state.showMenu = !noMenu.includes(to.path);
+  state.currentPath = to.path;
+  document.title = pathMap[to.name];
+});
+onUnmounted(() => {
+  unwatch();
+});
 </script>
 
 <template>
   <div class="layout">
-    <el-container class="container">
+    <el-container v-if="state.showMenu" class="container">
       <el-aside class="aside">
-        <!-- 系统名称和logo -->
         <div class="head">
           <div>
-            <img src="//s.weituibao.com/1582958061265/mlogo.png" alt="logo" />
-            <span>Vue3 admin</span>
+            <img
+              src="https://s.weituibao.com/1582958061265/mlogo.png"
+              alt="logo"
+            />
+            <span>vue3 admin</span>
           </div>
         </div>
-        <!-- 为了美观的线条 -->
         <div class="line" />
-        <el-menu background-color="#222832" text-color="#fff" :router="true">
-          <!-- 一级栏目 -->
+        <el-menu
+          :default-openeds="state.defaultOpen"
+          background-color="#222832"
+          text-color="#fff"
+          :router="true"
+          :default-active="state.currentPath"
+        >
           <el-sub-menu index="1">
             <template #title>
               <span>Dashboard</span>
             </template>
-            <!-- 二级栏目 -->
             <el-menu-item-group>
-              <el-menu-item index="/"
-                ><i class="el-icon-data-line" />首页</el-menu-item
+              <el-menu-item index="/introduce"
+                ><i-data-line width="20" /><span class="menu-cutom-title"
+                  >系统介绍</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/dashboard"
+                ><i-odometer width="20" /><span class="menu-cutom-title"
+                  >Dashboard</span
+                ></el-menu-item
               >
               <el-menu-item index="/add"
-                ><i class="el-icon-data-line" />添加商品</el-menu-item
+                ><i-plus width="20" /><span class="menu-cutom-title"
+                  >添加商品</span
+                ></el-menu-item
+              >
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="2">
+            <template #title>
+              <span>首页配置</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/swiper"
+                ><i-picture width="20" /><span class="menu-cutom-title"
+                  >轮播图配置</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/hot"
+                ><i-star-filled width="20" /><span class="menu-cutom-title"
+                  >热销商品配置</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/new"
+                ><i-sell width="20" /><span class="menu-cutom-title"
+                  >新品上线配置</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/recommend"
+                ><i-pointer width="20" /><span class="menu-cutom-title"
+                  >为你推荐配置</span
+                ></el-menu-item
+              >
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="3">
+            <template #title>
+              <span>模块管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/category"
+                ><i-menu width="20" /><span class="menu-cutom-title"
+                  >分类管理</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/good"
+                ><i-goods-filled width="20" /><span class="menu-cutom-title"
+                  >商品管理</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/guest"
+                ><i-user-filled width="20" /><span class="menu-cutom-title"
+                  >会员管理</span
+                ></el-menu-item
+              >
+              <el-menu-item index="/order"
+                ><i-tickets width="20" /><span class="menu-cutom-title"
+                  >订单管理</span
+                ></el-menu-item
+              >
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="4">
+            <template #title>
+              <span>系统管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/account"
+                ><i-unlock width="20" /><span class="menu-cutom-title"
+                  >修改密码</span
+                ></el-menu-item
               >
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
       </el-aside>
-      <!-- 右边内容布局 -->
       <el-container class="content">
         <Header />
         <div class="main">
-          <!--将 <router-view></router-view> 移到这里，并且用单标签-->
           <router-view />
         </div>
         <Footer />
       </el-container>
+    </el-container>
+    <el-container v-else class="container">
+      <router-view />
     </el-container>
   </div>
 </template>
