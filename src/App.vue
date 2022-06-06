@@ -26,7 +26,6 @@ router.beforeEach((to, from, next) => {
     }
   }
   state.showMenu = !noMenu.includes(to.path);
-  document.title = pathMap[to.name];
 });
 </script>
 

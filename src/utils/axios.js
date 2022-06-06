@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import router from '@/router/index'
-import config from '~/config'
 import { localGet } from './index'
+import config from '~/config'
 
 
 // 这边由于后端没有区分测试和正式，姑且都写成一个接口。
