@@ -87,6 +87,11 @@ const resetForm = () => {
 </script>
 
 <style scoped>
+.el-input /deep/ .el-input__inner {
+  border: 0;
+  padding: 0 100px;
+}
+
 .login-body {
   display: flex;
   justify-content: center;
