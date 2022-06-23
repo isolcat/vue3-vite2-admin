@@ -1,34 +1,3 @@
-<script setup>
-import { onUnmounted, reactive } from "vue";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
-import { useRouter } from "vue-router";
-import { pathMap, localGet } from "@/utils";
-
-const noMenu = ["/login"];
-const router = useRouter();
-const state = reactive({
-  showMenu: true,
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.path == "/login") {
-    // 如果路径是 /login 则正常执行
-    next();
-  } else {
-    // 如果不是 /login，判断是否有 token
-    if (!localGet("token")) {
-      // 如果没有，则跳至登录页面
-      next({ path: "/login" });
-    } else {
-      // 否则继续执行
-      next();
-    }
-  }
-  state.showMenu = !noMenu.includes(to.path);
-});
-</script>
-
 <template>
   <div class="layout">
     <el-container v-if="state.showMenu" class="container">
@@ -154,28 +123,103 @@ router.beforeEach((to, from, next) => {
   </div>
 </template>
 
+<script>
+import { onUnmounted, reactive } from "vue";
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import { useRouter } from "vue-router";
+import { pathMap, localGet } from "@/utils";
+export default {
+  name: "App",
+  components: {
+    Header,
+    Footer,
+  },
+  setup() {
+    console.log("App");
+    const noMenu = ["/login"];
+    const router = useRouter();
+    const state = reactive({
+      defaultOpen: ["1", "2", "3", "4"],
+      showMenu: true,
+      currentPath: "/dashboard",
+      count: {
+        number: 1,
+      },
+    });
+    // 监听浏览器原生回退事件
+    if (window.history && window.history.pushState) {
+      history.pushState(null, null, document.URL);
+      window.addEventListener(
+        "popstate",
+        () => {
+          if (!localGet("token")) {
+            state.showMenu = false;
+          }
+        },
+        false
+      );
+    }
+    const unwatch = router.beforeEach((to, from, next) => {
+      if (to.path == "/login") {
+        // 如果路径是 /login 则正常执行
+        next();
+      } else {
+        // 如果不是 /login，判断是否有 token
+        if (!localGet("token")) {
+          // 如果没有，则跳至登录页面
+          next({ path: "/login" });
+        } else {
+          // 否则继续执行
+          next();
+        }
+      }
+      state.showMenu = !noMenu.includes(to.path);
+      state.currentPath = to.path;
+      document.title = pathMap[to.name];
+    });
+    onUnmounted(() => {
+      unwatch();
+    });
+    return {
+      state,
+    };
+  },
+};
+</script>
+
 <style scoped>
 .layout {
-  /* 设置元素的最小高度，无法低于此高度 */
   min-height: 100vh;
   background-color: #ffffff;
 }
 .container {
-  /*   vh: 相对于视窗的高度, 视窗被均分为100单位的vh */
   height: 100vh;
 }
 .aside {
   width: 200px !important;
   background-color: #222832;
+  overflow: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+.aside::-webkit-scrollbar {
+  display: none;
 }
 .head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+.head > div {
   display: flex;
   align-items: center;
 }
 .head img {
   width: 50px;
   height: 50px;
-  /* 右边距 */
   margin-right: 10px;
 }
 .head span {
@@ -183,40 +227,8 @@ router.beforeEach((to, from, next) => {
   color: #ffffff;
 }
 .line {
-  /* hsla() 函数使用色相、饱和度、亮度、透明度来定义颜色。 */
-  border-top: 1px solid hsla(0, 0%, 100%, 0.05);
-  /* rgba() 函数使用红(R)、绿(G)、蓝(B)、透明度(A)的叠加来生成各式各样的颜色 */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.el-menu {
-  border-right: none !important;
-}
-.el-submenu {
   border-top: 1px solid hsla(0, 0%, 100%, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-.el-submenu:first-child {
-  border-top: none;
-}
-.el-submenu [class^="el-icon-"] {
-  vertical-align: -1px !important;
-}
-a {
-  color: #409eff;
-  text-decoration: none;
-}
-.el-pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-.el-popper__arrow {
-  display: none;
 }
 .content {
   display: flex;
@@ -225,13 +237,41 @@ a {
   overflow: hidden;
 }
 .main {
-  /* 允许在声明 CSS 属性值时执行一些计算 */
   height: calc(100vh - 100px);
   overflow: auto;
   padding: 10px;
 }
-
-li {
+.menu-cutom-title {
+  padding-left: 10px;
+}
+</style>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.el-menu {
+  border-right: none !important;
+}
+.el-menu-item-group {
   background-color: #222832;
+}
+.el-sub-menu:first-child {
+  border-top: none;
+}
+.el-sub-menu [class^="el-icon-"] {
+  vertical-align: -1px !important;
+}
+a {
+  color: #409eff;
+  text-decoration: none;
+}
+.el-pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+.el-popper__arrow {
+  display: none;
 }
 </style>
