@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    DialogAddCategory: typeof import('./src/components/DialogAddCategory.vue')['default']
     DialogAddGood: typeof import('./src/components/DialogAddGood.vue')['default']
     DialogAddSwiper: typeof import('./src/components/DialogAddSwiper.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
