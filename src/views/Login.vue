@@ -133,6 +133,9 @@ const resetForm = () => {
 }
 </style>
 <style>
+.el-input__wrapper {
+  padding: 1px 1px;
+}
 .el-form--label-top .el-form-item__label {
   padding: 0;
 }
