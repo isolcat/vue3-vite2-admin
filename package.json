@@ -9,11 +9,14 @@
         "server": "vite preview"
     },
     "dependencies": {
+        "@wangeditor/editor": "^5.1.1",
+        "@wangeditor/editor-for-vue": "^5.1.12",
         "axios": "^0.27.2",
         "element-plus": "^2.2.1",
         "js-md5": "^0.7.3",
         "vue": "^3.2.25",
-        "vue-router": "^4.0.13"
+        "vue-router": "^4.0.13",
+        "wangeditor": "^4.7.15"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^2.3.3",
