@@ -189,6 +189,9 @@ export default {
 </script>
 
 <style scoped>
+.el-menu-item {
+  color: #ffffff;
+}
 .layout {
   min-height: 100vh;
   background-color: #ffffff;
