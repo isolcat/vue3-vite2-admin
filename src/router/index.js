@@ -19,6 +19,12 @@ const router = createRouter({
             component: Index
         },
         {
+            path: '/dashboard',
+            name: 'dashboard',
+            component: () =>
+                import ( /* webpackChunkName: "dashboard" */ '../views/Index.vue')
+        },
+        {
             path: '/add',
             name: 'add',
             component: AddGood
