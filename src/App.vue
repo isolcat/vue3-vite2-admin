@@ -24,11 +24,6 @@
               <span>Dashboard</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/introduce"
-                ><i-data-line width="20" /><span class="menu-cutom-title"
-                  >系统介绍</span
-                ></el-menu-item
-              >
               <el-menu-item index="/dashboard"
                 ><i-odometer width="20" /><span class="menu-cutom-title"
                   >Dashboard</span
