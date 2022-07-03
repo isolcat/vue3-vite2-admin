@@ -5,10 +5,10 @@
         <div class="head">
           <div>
             <img
-              src="https://s.weituibao.com/1582958061265/mlogo.png"
+              id="logo"
+              src="https://pic.rmb.bdstatic.com/bjh/f1bf2a7c3b32f4002d8ad742bfefd791.png"
               alt="logo"
             />
-            <span>vue3 admin</span>
           </div>
         </div>
         <div class="line" />
@@ -184,6 +184,10 @@ export default {
 </script>
 
 <style scoped>
+#logo {
+  width: 100%;
+  height: 100%;
+}
 .el-menu-item {
   color: #ffffff;
 }
