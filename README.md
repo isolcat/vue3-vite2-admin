@@ -1,7 +1,39 @@
-# Vue 3 + Vite
+## vue3+vite2+element plus后台管理系统项目
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 项目介绍
 
-## Recommended IDE Setup
+该项目使用的技术栈为：
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- vue3.0
+- vite2.0
+- element plus
+- echarts5
+- vue-router4
+- axios
+- wangEditor 5
+
+本项目主要是对`vue3.0`和`element plus`的实际开发的运用，对vue3的语法糖，如`setup`等进行了实际使用，对element plus的组件有更深入的理解，同时对`echarts5`的可视化进行了一定的了解，该项目采用`vite`作为前端构建工具，使得在开发过程中内容的更新更加迅速
+
+## 效果图
+
+<img src="https://raw.githubusercontent.com/isolcat/images/master/20220703160333.png" style="zoom:50%;" />
+
+<img src="https://raw.githubusercontent.com/isolcat/images/master/20220703160354.png" style="zoom:50%;" />
+
+<img src="https://raw.githubusercontent.com/isolcat/images/master/20220703160549.png" style="zoom:50%;" />
+
+<img src="https://raw.githubusercontent.com/isolcat/images/master/20220703160638.png" style="zoom:50%;" />
+
+## 运行项目
+
+```bash
+# clone项目到本地
+git clone git@github.com:isolcat/vue3-vite2-admin.git
+
+# 安装项目依赖
+npm install
+
+# 运行项目
+npm run dev
+```
+

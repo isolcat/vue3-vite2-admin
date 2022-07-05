@@ -4,12 +4,8 @@
       <div class="head">
         <img
           class="logo"
-          src="https://s.weituibao.com/1582958061265/mlogo.png"
+          src="https://pic.rmb.bdstatic.com/bjh/7d593d0a8a97845ca2f6e792be993922.png"
         />
-        <div class="name">
-          <div class="title">新蜂商城</div>
-          <div class="tips">Vue3.0 后台管理系统</div>
-        </div>
       </div>
       <el-form
         label-position="top"
@@ -87,6 +83,17 @@ const resetForm = () => {
 </script>
 
 <style scoped>
+.head img[data-v-26084dc2] {
+  width: 1000px;
+  height: 150px;
+  margin-right: 1px;
+}
+.head[data-v-26084dc2] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 20px 0;
+}
 .el-input /deep/ .el-input__inner {
   border: 0;
   padding: 0 100px;
