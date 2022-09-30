@@ -1,6 +1,6 @@
 ## vue3+vite2+element plus后台管理系统项目
 
-<div align=center><img src="[url](https://pic.rmb.bdstatic.com/bjh/7d593d0a8a97845ca2f6e792be993922.png)" width="  "></div>
+<div align=center><img src="https://pic.rmb.bdstatic.com/bjh/7d593d0a8a97845ca2f6e792be993922.png" width="  "></div>
 
 ## 项目介绍
 
